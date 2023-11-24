@@ -31,58 +31,66 @@ export default function Matches() {
   ];
 
   return (
-    <div>
+    <div className="flex">
       <Navigation />
-      <div className="container m-auto mt-5 bg-red-100 p-4 rounded-lg text-gray-800">
-        <h1 className="text-2xl font-bold text-red-500 mb-4">Match Details</h1>
-        {matches.map((match) => (
-          <div
-            key={match.id}
-            className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md"
-          >
-            <p className="text-xl font-semibold mb-2">{match.name}</p>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-2 sm:col-span-1">
-                <p>
-                  <strong>Place:</strong> {match.place}
-                </p>
-                <p>
-                  <strong>Date:</strong> {match.date}
-                </p>
-                <p>
-                  <strong>Playing Teams:</strong> {match.playingTeams}
-                </p>
-                <p>
-                  <strong>Status:</strong> {match.isHeld ? "Held" : "Not Held"}
-                </p>
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <div className="mt-2">
-                  <a
-                    href={`/admin-match-update/${match.id}`}
-                    className="text-red-500 hover:underline"
-                  >
-                    Update Match
-                  </a>
+      <main className="flex-1 ml-64 p-8">
+        <div className="container m-auto mt-5 bg-red-100 p-4 rounded-lg text-gray-800">
+          <h1 className="text-2xl font-bold text-red-500 mb-4">
+            Match Details
+          </h1>
+          {matches.map((match) => (
+            <div
+              key={match.id}
+              className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md"
+            >
+              <p className="text-xl font-semibold mb-2">{match.name}</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2 sm:col-span-1">
+                  <p>
+                    <strong>Place:</strong> {match.place}
+                  </p>
+                  <p>
+                    <strong>Date:</strong> {match.date}
+                  </p>
+                  <p>
+                    <strong>Playing Teams:</strong> {match.playingTeams}
+                  </p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    {match.isHeld ? "Held" : "Not Held"}
+                  </p>
                 </div>
-                <div className="mt-2">
-                  <a
-                    href={`/delete-match/${match.id}`}
-                    className="text-red-500 hover:underline"
-                  >
-                    Delete Match
-                  </a>
+                <div className="col-span-2 sm:col-span-1">
+                  <div className="mt-2">
+                    <a
+                      href={`/admin-match-update/${match.id}`}
+                      className="text-red-500 hover:underline"
+                    >
+                      Update Match
+                    </a>
+                  </div>
+                  <div className="mt-2">
+                    <a
+                      href={`/delete-match/${match.id}`}
+                      className="text-red-500 hover:underline"
+                    >
+                      Delete Match
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+          ))}
+          <div className="mt-6">
+            <a
+              href="/admin-match-create"
+              className="text-red-500 hover:underline"
+            >
+              Create Match
+            </a>
           </div>
-        ))}
-        <div className="mt-6">
-          <a href="/admin-match-create" className="text-red-500 hover:underline">
-            Create Match
-          </a>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
