@@ -24,6 +24,10 @@ export default function Profile() {
             <h3 className="font-semibold">077-234-4444</h3>
           </div>
           <div className="flex justify-between py-5 text-xl">
+            <h2 className="font-bold">Age</h2>
+            <h3 className="font-semibold">24</h3>
+          </div>
+          <div className="flex justify-between py-5 text-xl">
             <h2 className="font-bold">Email Address</h2>
             <h3 className="font-semibold">jhonwilliam@gmail.com</h3>
           </div>
