@@ -1,6 +1,9 @@
 import React from "react";
 import Navigation from "../components/Nav";
 
+
+
+
 export default function Profile() {
   return (
     <div>

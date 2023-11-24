@@ -7,7 +7,7 @@ export default function CreateMatch() {
     place: "",
     date: "",
     playingTeams: "",
-    isHeld: false,
+    isHeld: true,
   });
 
   const handleChange = (e) => {
@@ -23,6 +23,7 @@ export default function CreateMatch() {
     // You can handle form submission and API requests here
     console.log("Match Data:", matchData);
   };
+
   return (
     <div className="flex">
       <Navigation />
@@ -90,16 +91,17 @@ export default function CreateMatch() {
                 />
               </div>
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="isHeld" className="block font-medium">
-                  <input
-                    type="checkbox"
-                    id="isHeld"
-                    name="isHeld"
-                    checked={matchData.isHeld}
-                    onChange={handleChange}
-                  />
-                  {" Is Held"}
-                </label>
+                <label htmlFor="isHeld" className="block font-medium">Is held</label>
+                <select
+                  id="isHeld"
+                  name="isHeld"
+                  value={matchData.isHeld}
+                  onChange={handleChange}
+                  className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+                >
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </select>
               </div>
             </div>
             <button
