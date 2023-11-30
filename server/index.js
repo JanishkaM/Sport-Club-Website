@@ -1,22 +1,42 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require("cors");
-const PlayerModel = require("./models/Players");
-
+require("dotenv").config();
+const port = process.env.SERVER_PORT || 3001;
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-// 9LwO4JyOUXl0HfxI
+const playerRoute = require("./routes/PlayerRoute");
+const matchRoute = require("./routes/MatchRoute");
+const teamRoute = require("./routes/TeamRoute");
+const adminRoute = require("./routes/AdminRoute");
 
-mongoose.connect('mongodb+srv://testuser:9LwO4JyOUXl0HfxI@sport-club.imswdi8.mongodb.net/?retryWrites=true&w=majority');
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-app.post("/admin-players-create", (req, res) => {
-  PlayerModel.create(req.body)
-    .then((players) => res.json(players))
-    .catch((err) => res.json(err));
-});
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.listen(3001, () => {
-  console.log("Server is Running");
-});
+// parse application/json
+app.use(bodyParser.json());
+
+mongoose
+  .connect(
+    "mongodb+srv://manstillofficial:5050100ch@sport-club.imswdi8.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`server running on ports ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.use("/api/v1/player", playerRoute);
+app.use("/api/v1/Match", matchRoute);
+app.use("/api/v1/team", teamRoute);
+app.use("/api/v1/admin", adminRoute);

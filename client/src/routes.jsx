@@ -5,6 +5,8 @@ import Team from './pages/Team';
 import Login from './pages/Login';
 
 import AdminLogin from './pages/admin/AdminLogin';
+import Dashboard from './pages/admin/Dashboard';
+
 import Players from './pages/admin/Players';
 import CreatePlayers from './pages/admin/CreatePlayers'
 import UpdatePlayers from './pages/admin/UpdatePlayers'
@@ -26,6 +28,8 @@ const AppRoutes = () => {
       <Route path="/teams" element={<Team />} />
 
       <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin-dash" element={<Dashboard />} />
+
       <Route path="/admin-players-view" element={<Players />} />
       <Route path="/admin-players-create" element={<CreatePlayers />} />
       <Route path="/admin-players-update" element={<UpdatePlayers />} />

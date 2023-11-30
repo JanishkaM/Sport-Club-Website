@@ -12,6 +12,9 @@ const Navigation = () => {
           </div>
           <ul className="flex flex-col space-y-4">
             <li className="ms-3 uppercase text-lg font-semibold text-white hover:text-red-900 focus:text-red-900">
+              <Link to="/admin-dash">Dashboard</Link>
+            </li>
+            <li className="ms-3 uppercase text-lg font-semibold text-white hover:text-red-900 focus:text-red-900">
               <Link to="/admin-players-view">Profiles</Link>
             </li>
             <li className="ms-3 uppercase text-lg font-semibold text-white hover:text-red-900 focus:text-red-900">

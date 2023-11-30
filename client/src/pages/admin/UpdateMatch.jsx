@@ -1,19 +1,60 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Navigation from "./components/Nav";
-export default function UpdateMatch() {
-  const [matchData, setMatchData] = useState({
-    name: "",
-    place: "",
-    date: "",
-    playingTeams: "",
-    isHeld: true,
-  });
+import axios from "axios";
+export default function UpdateMatch({setUpdate,active,getMatches}) {
+  const [name, setName] = useState(active.name);
+  const [team1, setTeam1] = useState();
+  const [team2, setTeam2] = useState();
+  const [teams,setTeams] = useState([]);
+  const [isHeld, setIsHeld] = useState(active.isHeld);
+  const [date, setDate] = useState();
+  const [place, setPlace] = useState(active.place);
+
+  const handleChangeTeam1 = (id) => {
+    axios.get("http://localhost:3001/api/v1/team/get",{headers:{"id":`${id}`}}).then(result=>{
+      setTeam1(result.data.data.value);
+    }).catch(err=>{
+      console.log(err)
+    })
+  };
+  const handleChangeTeam2 = (id) => {
+    axios.get("http://localhost:3001/api/v1/team/get",{headers:{"id":`${id}`}}).then(result=>{
+      setTeam2(result.data.data.value);
+    }).catch(err=>{
+      console.log(err)
+    })
+  };
+
+  const getlist = async () => {
+    await axios.get('http://localhost:3001/api/v1/team/list').then((result) => {
+      setTeams(result.data.data.value)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  useEffect(() => {
+    getlist()
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can handle form submission and API requests here
-    console.log("Match Data:", matchData);
+    axios.put("http://localhost:3001/api/v1/match/update",{
+      name,
+      place,
+      date,
+      teams: {team1, team2},
+      isHeld
+    },{headers:{'id':`${active._id}`}}).then(result=>{
+      console.log(result)
+      getMatches();
+      setUpdate(false);
+    }).catch(error=>{
+      console.log(error)
+    })
   };
+
   return (
     <div className="flex">
       <Navigation />
@@ -33,8 +74,8 @@ export default function UpdateMatch() {
                   type="text"
                   id="name"
                   name="name"
-                  value={matchData.name}
-                  onChange={handleChange}
+                  value={name}
+                  onChange={(event)=>setName(event.target.value)}
                   className="w-full p-2 border rounded"
                   placeholder="Match Name"
                 />
@@ -47,8 +88,8 @@ export default function UpdateMatch() {
                   type="text"
                   id="place"
                   name="place"
-                  value={matchData.place}
-                  onChange={handleChange}
+                  value={place}
+                  onChange={(event)=>setPlace(event.target.value)}
                   className="w-full p-2 border rounded"
                   placeholder="Place"
                 />
@@ -61,37 +102,56 @@ export default function UpdateMatch() {
                   type="date"
                   id="date"
                   name="date"
-                  value={matchData.date}
-                  onChange={handleChange}
+                  onChange={(event)=>setDate(event.target.value)}
                   className="w-full p-2 border rounded"
                 />
+              </div>
+              <br/>
+              <div className="col-span-2 sm:col-span-1">
+                <label htmlFor="playingTeams" className="block font-medium">
+                  Teams 1
+                </label>
+                <select
+                    className="w-full p-2 border rounded"
+                    id="Team1"
+                    name="Teams1"
+                    onChange={(e)=>handleChangeTeam1(e.target.value)}
+                >
+                  <option selected disabled>Select Team</option>
+                  {teams.map((team,index)=>(
+                      <option key={index} value={team._id} >{team.name}</option>))
+                  }
+
+                </select>
               </div>
               <div className="col-span-2 sm:col-span-1">
                 <label htmlFor="playingTeams" className="block font-medium">
-                  Playing Teams
+                  Teams 2
                 </label>
-                <input
-                  type="text"
-                  id="playingTeams"
-                  name="playingTeams"
-                  value={matchData.playingTeams}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                  placeholder="Playing Teams"
-                />
+                <select
+                    className="w-full p-2 border rounded"
+                    id="Team2"
+                    name="Teams2"
+                    required
+                    onChange={(e)=>handleChangeTeam2(e.target.value)}
+                >
+                  <option selected disabled>Select Team</option>
+                  {teams.map((team,index)=>(
+                      <option key={index} value={team._id}>{team.name}</option>
+                  ))}
+
+                </select>
               </div>
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="isHeld" className="block font-medium">Is held</label>
-                <select
-                  id="isHeld"
-                  name="isHeld"
-                  value={matchData.isHeld}
-                  onChange={handleChange}
-                  className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
-                >
-                  <option value={true}>Yes</option>
-                  <option value={false}>No</option>
-                </select>
+                <label htmlFor="isHeld" className="block font-medium">
+                  <input
+                    type="checkbox"
+                    id="isHeld"
+                    name="isHeld"
+                    onChange={()=>setIsHeld(!isHeld)}
+                  />
+                  {" Is Held"}
+                </label>
               </div>
             </div>
             <button

@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 import Navigation from "./components/Nav";
 import axios from "axios";
+import routes from "../../routes.jsx";
 
 export default function Players() {
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [contact, setContact] = useState();
   const [email, setEmail] = useState();
-  const [team, setTeam] = useState();
   const [points, setPoints] = useState();
   const [age, setAge] = useState();
+  const [password, setPassword] = useState();
 
   const Submit = (e) => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3001/admin-players-create", {
+      .post("http://localhost:3001/api/v1/player/save", {
         name,
         address,
         contact,
         email,
-        team,
         points,
         age,
+        password
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result)
+        window.location.href = "/admin-players-view"
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -51,6 +55,7 @@ export default function Players() {
                   name="name"
                   className="w-full p-2 border rounded"
                   placeholder="Player Name"
+                  required={true}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -64,6 +69,7 @@ export default function Players() {
                   name="address"
                   className="w-full p-2 border rounded"
                   placeholder="Address"
+                  required={true}
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
@@ -77,6 +83,7 @@ export default function Players() {
                   name="contact"
                   className="w-full p-2 border rounded"
                   placeholder="Contact"
+                  required={true}
                   onChange={(e) => setContact(e.target.value)}
                 />
               </div>
@@ -90,20 +97,22 @@ export default function Players() {
                   name="email"
                   className="w-full p-2 border rounded"
                   placeholder="Email"
+                  required={true}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="team" className="block font-medium">
-                  Team
+                <label htmlFor="password" className="block font-medium">
+                  Password
                 </label>
                 <input
-                  type="text"
-                  id="team"
-                  name="team"
-                  className="w-full p-2 border rounded"
-                  placeholder="Team"
-                  onChange={(e) => setTeam(e.target.value)}
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="w-full p-2 border rounded"
+                    placeholder="Password"
+                    required={true}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="col-span-2 sm:col-span-1">
@@ -116,6 +125,7 @@ export default function Players() {
                   name="age"
                   className="w-full p-2 border rounded"
                   placeholder="Age"
+                  required={true}
                   onChange={(e) => setAge(e.target.value)}
                 />
               </div>
@@ -129,6 +139,7 @@ export default function Players() {
                   name="points"
                   className="w-full p-2 border rounded"
                   placeholder="Points"
+                  required={true}
                   onChange={(e) => setPoints(e.target.value)}
                 />
               </div>

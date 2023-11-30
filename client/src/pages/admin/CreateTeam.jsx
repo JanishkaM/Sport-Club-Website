@@ -1,26 +1,44 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Navigation from "./components/Nav";
+import axios from "axios";
 export default function CreateTeam() {
   const [name, setName] = useState();
-  const [checkboxValues, setCheckboxValues] = useState({}); // Use an object to store checkbox values
-
+  const [teamPlayers,setTeamPlayers] = useState([])
+  const [players,setPlayers] = useState([])
   // Handle the checkbox change event
   const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    setCheckboxValues({
-      ...checkboxValues,
-      [name]: checked, // Update the value in the object
-    });
+    if(event.event.target.checked){
+      teamPlayers.push(event.value);
+    }else {
+      teamPlayers.pop(event.value)
+    }
   };
+
+  const getlist = ()=>{
+    axios.get('http://localhost:3001/api/v1/player/list').then((result) => {
+      setPlayers(result.data.data.value)
+    }).catch(error=>{
+      console.log(error)
+    })
+  }
+
+  useEffect(() => {
+    getlist()
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/admin-players-create", {
+      .post("http://localhost:3001/api/v1/team/save", {
         name,
+        teamPlayers
+
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result)
+        window.location.href = "/admin-team-view"
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -44,48 +62,26 @@ export default function CreateTeam() {
                   name="name"
                   className="w-full p-2 border rounded"
                   placeholder="Team Name"
+                  required={true}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-2" >
                 <label htmlFor="players" className="block font-medium">
                   Select Players
                 </label>
-                <input
-                  name="Player 1"
-                  className="mx-2"
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                Player 1
-                <input
-                  name="Player 2"
-                  className="mx-2"
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                Player 2
-                <input
-                  name="Player 3"
-                  className="mx-2"
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                Player 3
-                <input
-                  name="Player 4"
-                  className="mx-2"
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                Player 4
-                <input
-                  name="Player 5"
-                  className="mx-2"
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                />
-                Player 5
+                { players.map((player,index)=>(
+                      <><input
+                          name="player.id"
+                          className="mx-2"
+                          type="checkbox"
+                          value={player}
+                          key={index}
+                          onChange={(e)=>handleCheckboxChange({event:e,value:player})}
+                      />
+                        <label >{player.name}</label>
+                      </>
+                    ))}
               </div>
             </div>
             <button className="w-full mt-4 bg-red-500 text-white p-2 rounded hover:bg-red-600">
