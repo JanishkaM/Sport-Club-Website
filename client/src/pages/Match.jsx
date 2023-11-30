@@ -29,19 +29,17 @@ export default function Profile() {
 
           {matches.map((match,index)=>(
                   <div key={index} className="text-xl bg-blue-500 text-white rounded-lg hover:bg-blue-600 m-4 p-7">
-                      <h2 className="font-bold">Match Name</h2>
-                      <h3 className="font-semibold pb-3">{match.name}</h3>
+                      <h3 className="text-blue-950 pb-1 text-3xl capitalize border-b-2 font-bold mb-3">{match.name}</h3>
 
-                      <h2 className="font-bold">Starting Date</h2>
                       <h3 className="font-semibold pb-3">{match.date.slice(0,11)}</h3>
 
-                      <h2 className="font-bold">Place</h2>
+                      <h2 className="text-blue-950 border-b-2 mb-1 font-bold">Place</h2>
                       <h3 className="font-semibold pb-3">{match.place}</h3>
 
-                      <h2 className="font-bold">Status</h2>
+                      <h2 className="text-blue-950 border-b-2 mb-1 font-bold">Status</h2>
                       <h3 className="font-semibold pb-3">{match.isHeld? "Held":"Start Soon"}</h3>
 
-                      <h2 className="font-bold">Teams</h2>
+                      <h2 className="text-blue-950 border-b-2 mb-1 font-bold">Teams</h2>
                       <h3 className="font-semibold">{match.teams.team1.name}</h3>
                       <h3 className="font-semibold">{match.teams.team2.name}</h3>
                   </div>

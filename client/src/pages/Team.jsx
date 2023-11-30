@@ -24,11 +24,10 @@ export default function Profile() {
 
       <div className="container grid grid-cols-1 md:grid-cols-3 m-auto">
         {teams.map((team,index)=>(
-            <div key={index} className="text-xl bg-blue-500 text-white rounded-lg hover:bg-blue-600 m-4 p-7">
-                <h2 className="font-bold">Team Name</h2>
-                <h3 className="font-semibold pb-3">{team.name}</h3>
+            <div key={index} className="text-xl bg-blue-500 text-white rounded-lg hover:bg-blue-600 m-4 p-7">                
+                <h2 className="capitalize text-3xl font-bold pb-3">{team.name}</h2>
 
-                <h2 className="font-bold">Members</h2>
+                <h2 className="font-bold text-2xl border-b-2 mb-3">Players</h2>
                 {team.players.map((player,index)=>(
                     <h3 key={index} className="font-semibold">{player.name}</h3>
                 ))}

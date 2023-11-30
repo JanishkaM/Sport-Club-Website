@@ -44,7 +44,7 @@ function Players  () {
                   <div
                       key={player.id}
                       id={player.id}
-                      className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md"
+                      className="mt-6 p-4 border border-gray-500 hover:border-gray-900 bg-red-200 rounded-lg"
                   >
                     <p className="text-xl font-semibold mb-2">{player.name}</p>
                     <div className="flex flex-wrap">
@@ -97,7 +97,7 @@ function Players  () {
               <div className="mt-6">
                 <a
                     href="/admin-players-create"
-                    className="text-red-500  hover:underline"
+                    className="text-white bg-red-500 px-3 py-2 rounded-md hover:bg-red-600"
                 >
                   Create Player
                 </a>

@@ -21,9 +21,9 @@ export default function AdminLogin() {
       })
   }
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="login flex items-center justify-center min-h-screen">
       <div className="w-96 p-6 border rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold mb-7 text-center text-red-500">
+        <h2 className="text-3xl font-bold mb-7 text-center text-white">
           Admin Login
         </h2>
         <form onSubmit={(event)=>login(event,email,password)}>

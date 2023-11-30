@@ -39,7 +39,7 @@ export default function Teams() {
               {teams.map((team) => (
                   <div
                       key={team._id}
-                      className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md"
+                      className="mt-6 p-4 border border-gray-500 hover:border-gray-900 bg-red-200 rounded-lg"
                   >
                     <p className="text-xl font-semibold mb-2">{team.name}</p>
                     <div>
@@ -76,7 +76,7 @@ export default function Teams() {
               <div className="mt-6">
                 <a
                     href="/admin-team-create"
-                    className="text-red-500 hover:underline"
+                    className="text-white bg-red-500 px-3 py-2 rounded-md hover:bg-red-600"
                 >
                   Create Team
                 </a>

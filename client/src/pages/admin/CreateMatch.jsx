@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "./components/Nav";
 import axios from "axios";
 
@@ -6,53 +6,68 @@ export default function CreateMatch() {
   const [name, setName] = useState();
   const [team1, setTeam1] = useState();
   const [team2, setTeam2] = useState();
-  const [teams,setTeams] = useState([]);
-  const [isHeld, setIsHeld] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [isHeld, setIsHeld] = useState(true);
   const [date, setDate] = useState();
   const [place, setPlace] = useState();
 
   const handleChangeTeam1 = (id) => {
-    axios.get("http://localhost:3001/api/v1/team/get",{headers:{"id":`${id}`}}).then(result=>{
-      setTeam1(result.data.data.value);
-    }).catch(err=>{
-      console.log(err)
-    })
+    axios
+      .get("http://localhost:3001/api/v1/team/get", {
+        headers: { id: `${id}` },
+      })
+      .then((result) => {
+        setTeam1(result.data.data.value);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const handleChangeTeam2 = (id) => {
-    axios.get("http://localhost:3001/api/v1/team/get",{headers:{"id":`${id}`}}).then(result=>{
-      setTeam2(result.data.data.value);
-    }).catch(err=>{
-      console.log(err)
-    })
-    };
+    axios
+      .get("http://localhost:3001/api/v1/team/get", {
+        headers: { id: `${id}` },
+      })
+      .then((result) => {
+        setTeam2(result.data.data.value);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    const getlist = async () => {
-    await axios.get('http://localhost:3001/api/v1/team/list').then((result) => {
-      setTeams(result.data.data.value)
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  const getlist = async () => {
+    await axios
+      .get("http://localhost:3001/api/v1/team/list")
+      .then((result) => {
+        setTeams(result.data.data.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    getlist()
+    getlist();
   }, []);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/api/v1/match/save",{
+    axios
+      .post("http://localhost:3001/api/v1/match/save", {
         name,
-      place,
-      date,
-      teams: {team1, team2},
-      isHeld
-    }).then(result=>{
-      console.log(result)
-      window.location.href = "/admin-match-view"
-    }).catch(error=>{
-      console.log(error)
-    })
+        place,
+        date,
+        teams: { team1, team2 },
+        isHeld,
+      })
+      .then((result) => {
+        console.log(result);
+        window.location.href = "/admin-match-view";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="flex">
@@ -73,7 +88,7 @@ export default function CreateMatch() {
                   type="text"
                   id="name"
                   name="name"
-                  onChange={(e)=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full p-2 border rounded"
                   placeholder="Match Name"
                 />
@@ -86,7 +101,7 @@ export default function CreateMatch() {
                   type="text"
                   id="place"
                   name="place"
-                  onChange={(e)=>setPlace(e.target.value)}
+                  onChange={(e) => setPlace(e.target.value)}
                   className="w-full p-2 border rounded"
                   placeholder="Place"
                 />
@@ -99,25 +114,29 @@ export default function CreateMatch() {
                   type="date"
                   id="date"
                   name="date"
-                  onChange={(e)=>setDate(e.target.value)}
+                  onChange={(e) => setDate(e.target.value)}
                   className="w-full p-2 border rounded"
                 />
-              </div><br/>
+              </div>
+              <br />
               <div className="col-span-2 sm:col-span-1">
                 <label htmlFor="playingTeams" className="block font-medium">
                   Teams 1
                 </label>
                 <select
-                    className="w-full p-2 border rounded"
-                    id="Team1"
-                    name="Teams1"
-                    onChange={(e)=>handleChangeTeam1(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  id="Team1"
+                  name="Teams1"
+                  onChange={(e) => handleChangeTeam1(e.target.value)}
                 >
-                  <option selected disabled>Select Team</option>
-                  {teams.map((team,index)=>(
-                    <option key={index} value={team._id} >{team.name}</option>))
-                  }
-
+                  <option selected disabled>
+                    Select Team
+                  </option>
+                  {teams.map((team, index) => (
+                    <option key={index} value={team._id}>
+                      {team.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="col-span-2 sm:col-span-1">
@@ -125,29 +144,36 @@ export default function CreateMatch() {
                   Teams 2
                 </label>
                 <select
-                    className="w-full p-2 border rounded"
-                    id="Team2"
-                    name="Teams2"
-                    required
-                    onChange={(e)=>handleChangeTeam2(e.target.value)}
+                  className="w-full p-2 border rounded"
+                  id="Team2"
+                  name="Teams2"
+                  required
+                  onChange={(e) => handleChangeTeam2(e.target.value)}
                 >
-                  <option selected disabled>Select Team</option>
-                  {teams.map((team,index)=>(
-                      <option key={index} value={team._id}>{team.name}</option>
+                  <option selected disabled>
+                    Select Team
+                  </option>
+                  {teams.map((team, index) => (
+                    <option key={index} value={team._id}>
+                      {team.name}
+                    </option>
                   ))}
-
                 </select>
               </div>
 
               <div className="col-span-2 sm:col-span-1">
                 <label htmlFor="isHeld" className="block font-medium">
-                  <input
-                    type="checkbox"
-                    id="isHeld"
+                  <select
+                    className="w-full p-2 border rounded"
                     name="isHeld"
-                    onChange={()=>{setIsHeld(!isHeld)}}
-                  />
-                  {" Is Held"}
+                    id="isHeld"
+                    onChange={() => {
+                      setIsHeld(!isHeld);
+                    }}
+                  >
+                    <option value="true">Held</option>
+                    <option value="false">Not Held</option>
+                  </select>
                 </label>
               </div>
             </div>
